@@ -100,8 +100,6 @@ public final class FastLeafDecayPlugin extends JavaPlugin implements Listener {
         for (BlockFace neighborFace: NEIGHBORS) {
             final Block block = oldBlock.getRelative(neighborFace);
             if (!Tag.LEAVES.isTagged(block.getType())) continue;
-            Leaves leaves = (Leaves) block.getBlockData();
-            if (leaves.isPersistent()) continue;
             if (scheduledBlocks.contains(block)) continue;
             if (oneByOne) {
                 if (scheduledBlocks.isEmpty()) {
@@ -134,7 +132,6 @@ public final class FastLeafDecayPlugin extends JavaPlugin implements Listener {
         if (!block.getWorld().isChunkLoaded(block.getX() >> 4, block.getZ() >> 4)) return false;
         if (!Tag.LEAVES.isTagged(block.getType())) return false;
         Leaves leaves = (Leaves) block.getBlockData();
-        if (leaves.isPersistent()) return false;
         if (leaves.getDistance() < 7) return false;
         LeavesDecayEvent event = new LeavesDecayEvent(block);
         getServer().getPluginManager().callEvent(event);
